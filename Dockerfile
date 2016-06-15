@@ -38,7 +38,9 @@ ENV HADOOP_YARN_HOME /opt/hadoop
 ENV HADOOP_CONF_DIR /opt/hadoop/etc/hadoop
 ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
 ENV BOOTSTRAP /etc/bootstrap.sh
+
 ADD bootstrap.sh /etc/bootstrap.sh
+
 RUN current=http://www.apache.org/dist/hadoop/common/stable && \
     ref=$(wget -qO - ${current} | grep -v src\\. | grep -v doc | sed -n 's/.*href="\(hadoop-.*\.gz\)".*/\1/p' | tail -1) && \
     wget -O - ${current}/${ref} | gzip -dc | tar x -C /opt/ -f - && \
@@ -76,7 +78,7 @@ RUN service ssh start && \
     $HADOOP_PREFIX/bin/hdfs dfs -mkdir -p /user/root && \
     $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
 
-#RUN service ssh start && $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh && $HADOOP_PREFIX/sbin/start-dfs.sh && $HADOOP_PREFIX/bin/hdfs dfs -put $HADOOP_PREFIX/etc/hadoop/ input
+VOLUME /opt/hadoop-config
 
 CMD ["/etc/bootstrap.sh", "-d"]
 
@@ -88,4 +90,3 @@ EXPOSE 19888
 EXPOSE 8030 8031 8032 8033 8040 8042 8088
 #Other ports
 EXPOSE 49707 2122
-
