@@ -3,6 +3,7 @@
         <name>yarn.resourcemanager.hostname</name>
         <value>HOSTNAME</value>
     </property>
+
     <property>
         <name>yarn.nodemanager.log-dirs</name>
         <value>/opt/app-logs</value>
@@ -10,6 +11,15 @@
     <property>
         <name>yarn.log-aggregation-enable</name>
         <value>true</value>
+    </property>
+
+    <property>
+        <name>yarn.nodemanager.vmem-check-enabled</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.vmem-pmem-ratio</name>
+        <value>4</value>
     </property>
 
     <property>
